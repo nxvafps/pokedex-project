@@ -1,7 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { theme } from "../../styles/theme";
 
-// Animations
 const slideIn = keyframes`
   from {
     opacity: 0;
@@ -19,7 +18,6 @@ const spin = keyframes`
   }
 `;
 
-// Layout components
 export const Container = styled.div`
   display: grid;
   gap: 2rem;
@@ -54,7 +52,6 @@ export const PokemonInfo = styled.div`
   }
 `;
 
-// Navigation
 export const BackButton = styled.button`
   position: fixed;
   top: 5rem;
@@ -80,7 +77,6 @@ export const BackButton = styled.button`
   }
 `;
 
-// Pokemon visuals
 export const StyledImage = styled.img`
   width: 200px;
   height: 200px;
@@ -121,7 +117,6 @@ export const Types = styled.div`
   }
 `;
 
-// Stats section styles
 export const PhysicalStats = styled.div`
   margin-top: 2rem;
   padding: 1.5rem;
@@ -198,12 +193,11 @@ export const StatBar = styled.div`
   div {
     height: 100%;
     background: ${theme.colors.primary};
-    width: ${(props) => Math.min((props.$value / 255) * 100, 100)}%;
+    width: ${(props) => Math.min((props.value / 255) * 100, 100)}%;
     transition: width 1s ease-out;
   }
 `;
 
-// Abilities section styles
 export const Abilities = styled(PhysicalStats)`
   div[role="tablist"] {
     display: flex;
@@ -258,7 +252,6 @@ export const AbilityButton = styled.button`
   }
 `;
 
-// Moves List styles
 export const Moves = styled(PhysicalStats)`
   grid-column: 1 / -1;
   width: 100%;
@@ -356,7 +349,6 @@ export const MoveDescription = styled(AbilityDescription)`
   }
 `;
 
-// Loading and animation components
 export const LoadingSpinner = styled.div`
   width: 24px;
   height: 24px;
