@@ -55,14 +55,21 @@ export const PokemonInfo = styled.div`
 
   .pokemon-header {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem;
-    align-items: center;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: start;
     margin-bottom: 2rem;
+    width: 100%;
   }
 
   .pokemon-details {
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    min-width: 0;
+    padding: 0.5rem 0;
   }
 
   @media (max-width: ${theme.breakpoints.tablet}) {
@@ -70,10 +77,13 @@ export const PokemonInfo = styled.div`
       grid-template-columns: 1fr;
       justify-items: center;
       text-align: center;
+      gap: 1.5rem;
     }
-    
+
     .pokemon-details {
       text-align: center;
+      align-items: center;
+      width: 100%;
     }
   }
 
@@ -81,10 +91,12 @@ export const PokemonInfo = styled.div`
     font-size: 2.5rem;
     color: ${(props) =>
       theme.colors.types[props.$primaryType] || theme.colors.text};
-    margin-bottom: 0.5rem;
+    margin: 0;
     text-transform: capitalize;
     position: relative;
     display: inline-block;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.2;
 
     &::after {
       content: "";
@@ -109,9 +121,18 @@ export const PokemonInfo = styled.div`
 
   p {
     color: ${theme.colors.textLight};
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 1px;
+    padding: 0.2rem 0.8rem;
+    margin: 0;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: ${theme.shadows.card};
   }
 `;
 
@@ -181,7 +202,7 @@ export const Types = styled.div`
   display: flex;
   gap: 0.75rem;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
 
   @media (min-width: ${theme.breakpoints.tablet}) {
     justify-content: flex-start;
