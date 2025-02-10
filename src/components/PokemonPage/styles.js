@@ -27,8 +27,7 @@ export const Container = styled.div`
   animation: ${slideIn} 0.5s ease-out;
 
   @media (min-width: ${theme.breakpoints.tablet}) {
-    grid-template-columns: minmax(300px, auto) 1fr;
-    align-items: start;
+    grid-template-columns: 1fr;
     gap: 3rem;
   }
 `;
@@ -48,13 +47,34 @@ export const PokemonInfo = styled.div`
   border: 1px solid
     ${(props) =>
       `${theme.colors.types[props.$primaryType]}20` || theme.colors.background};
+  grid-column: 1 / -1;
 
   &:hover {
     box-shadow: ${theme.shadows.cardHover};
   }
 
-  @media (min-width: ${theme.breakpoints.tablet}) {
+  .pokemon-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .pokemon-details {
     text-align: left;
+  }
+
+  @media (max-width: ${theme.breakpoints.tablet}) {
+    .pokemon-header {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+    }
+    
+    .pokemon-details {
+      text-align: center;
+    }
   }
 
   h2 {
@@ -336,7 +356,6 @@ export const AbilityButton = styled.button`
 `;
 
 export const Moves = styled(PhysicalStats)`
-  grid-column: 1 / -1;
   width: 100%;
 
   .moves-grid {
