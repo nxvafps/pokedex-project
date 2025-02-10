@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getMoveDetails } from "../../utils/api";
 import { Moves, MoveItem, LoadingSpinner, MoveDescription } from "./styles";
 
 function PokemonMoves({ moves }) {
@@ -14,8 +15,7 @@ function PokemonMoves({ moves }) {
   const fetchMoveDetails = async (url) => {
     try {
       setIsLoading(true);
-      const response = await fetch(url);
-      const data = await response.json();
+      const data = await getMoveDetails(url);
       const englishDescription = data.effect_entries.find(
         (entry) => entry.language.name === "en"
       );

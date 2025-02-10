@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { api, getPokemon } from "../../utils/api";
 import {
   SearchContainer,
   SearchInput,
@@ -17,14 +18,12 @@ function PokemonForm({ onSearch }) {
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
-    // Fetch all pokemon names when component mounts
     const fetchPokemonList = async () => {
       try {
-        const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=1000"
-        );
-        const data = await response.json();
-        setPokemonList(data.results.map((pokemon) => pokemon.name));
+        const { results } = await api
+          .get("/pokemon?limit=1000")
+          .then((res) => res.data);
+        setPokemonList(results.map((pokemon) => pokemon.name));
       } catch (error) {
         console.error("Error fetching pokemon list:", error);
       }
@@ -53,20 +52,9 @@ function PokemonForm({ onSearch }) {
     setSearchTerm(pokemonName);
     setShowSuggestions(false);
     try {
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
-      );
-      if (!response.ok) throw new Error("Pokemon not found");
-      const pokemonData = await response.json();
-      const moves = pokemonData.moves.map((move) => ({
-        ...move,
-        move: {
-          ...move.move,
-          url: `https://pokeapi.co/api/v2/move/${move.move.name}`,
-        },
-      }));
-      onSearch([{ ...pokemonData, moves }]);
-      setSearchTerm(""); // Clear input after successful search
+      const pokemonData = await getPokemon(pokemonName);
+      onSearch([pokemonData]);
+      setSearchTerm("");
     } catch (error) {
       console.error("Error searching pokemon:", error);
       setError("Pokemon not found. Try a different name or ID.");
@@ -78,7 +66,6 @@ function PokemonForm({ onSearch }) {
     setError("");
     const searchValue = searchTerm.trim();
 
-    // If empty or whitespace only, trigger default view
     if (!searchValue) {
       onSearch(null);
       setSearchTerm("");
@@ -86,20 +73,9 @@ function PokemonForm({ onSearch }) {
     }
 
     try {
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${searchValue}`
-      );
-      if (!response.ok) throw new Error("Pokemon not found");
-      const pokemonData = await response.json();
-      const moves = pokemonData.moves.map((move) => ({
-        ...move,
-        move: {
-          ...move.move,
-          url: `https://pokeapi.co/api/v2/move/${move.move.name}`,
-        },
-      }));
-      onSearch([{ ...pokemonData, moves }]);
-      setSearchTerm(""); // Clear input after successful search
+      const pokemonData = await getPokemon(searchValue);
+      onSearch([pokemonData]);
+      setSearchTerm("");
     } catch (error) {
       console.error("Error searching pokemon:", error);
       setError("Pokemon not found. Try a different name or ID.");

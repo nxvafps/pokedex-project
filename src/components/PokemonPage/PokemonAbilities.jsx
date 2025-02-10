@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getAbilityDetails } from "../../utils/api";
 import {
   Abilities,
   AbilityButton,
@@ -14,8 +15,7 @@ export function PokemonAbilities({ abilities }) {
   const fetchAbilityEffect = async (url) => {
     try {
       setIsLoading(true);
-      const response = await fetch(url);
-      const data = await response.json();
+      const data = await getAbilityDetails(url);
       const englishEffect = data.effect_entries.find(
         (entry) => entry.language.name === "en"
       );

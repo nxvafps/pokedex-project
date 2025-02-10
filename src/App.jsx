@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { getPokemonList, getPokemon } from "./utils/api";
 import {
   Header,
   PokemonGrid,
@@ -28,21 +29,9 @@ function App() {
       setLoading(true);
       try {
         const defaultUrl = "https://pokeapi.co/api/v2/pokemon?limit=12";
-        const response = await fetch(defaultUrl);
-        const data = await response.json();
+        const data = await getPokemonList(defaultUrl);
         const pokemonDetails = await Promise.all(
-          data.results.map(async (pokemon) => {
-            const res = await fetch(`${pokemon.url}`);
-            const pokemonData = await res.json();
-            const moves = pokemonData.moves.map((move) => ({
-              ...move,
-              move: {
-                ...move.move,
-                url: `https://pokeapi.co/api/v2/move/${move.move.name}`,
-              },
-            }));
-            return { ...pokemonData, moves };
-          })
+          data.results.map(async (pokemon) => getPokemon(pokemon.name))
         );
         setPokemons(pokemonDetails);
         setNextPage(data.next);
@@ -70,20 +59,10 @@ function App() {
   const fetchPokemons = async (url) => {
     setLoading(true);
     try {
-      const response = await fetch(url);
-      const data = await response.json();
+      const data = await getPokemonList(url);
       const pokemonDetails = await Promise.all(
         data.results.map(async (pokemon) => {
-          const res = await fetch(`${pokemon.url}`);
-          const pokemonData = await res.json();
-          const moves = pokemonData.moves.map((move) => ({
-            ...move,
-            move: {
-              ...move.move,
-              url: `https://pokeapi.co/api/v2/move/${move.move.name}`,
-            },
-          }));
-          return { ...pokemonData, moves };
+          return getPokemon(pokemon.name);
         })
       );
       setPokemons(pokemonDetails);
