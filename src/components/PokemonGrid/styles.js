@@ -1,11 +1,24 @@
 import styled from "styled-components";
+import { theme } from "../../styles/theme";
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   padding: 2rem;
   margin: 0 auto;
+
+  @media (min-width: ${theme.breakpoints.mobile}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: ${theme.breakpoints.tablet}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: ${theme.breakpoints.desktop}) {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+  }
 `;
 
 export const PaginationContainer = styled.div`

@@ -54,7 +54,7 @@ function App() {
       <Header />
       <PokemonForm onSearch={handleSearch} />
       {loading ? (
-        <p>Loading...</p>
+        <p className="loading">Loading Pokémon...</p>
       ) : (
         <PokemonGrid
           pokemons={pokemons}

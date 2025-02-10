@@ -1,6 +1,32 @@
 #root {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 9rem 2rem 2rem;
+  padding: 7rem 1rem 2rem;
   text-align: center;
+}
+
+@media (min-width: 1024px) {
+  #root {
+    padding-top: 8rem;
+    padding-inline: 2rem;
+  }
+}
+
+.loading {
+  color: var(--text);
+  font-size: 1.2rem;
+  margin: 2rem 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
 }
