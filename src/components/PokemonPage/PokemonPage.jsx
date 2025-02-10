@@ -5,6 +5,7 @@ import {
   Container,
   BackButton,
   Types,
+  Abilities,
 } from "./styles";
 
 function PokemonPage({ pokemon, onBack }) {
@@ -23,6 +24,16 @@ function PokemonPage({ pokemon, onBack }) {
               <span key={type.type.name}>{type.type.name}</span>
             ))}
           </Types>
+          <Abilities>
+            <h3>Abilities</h3>
+            <ul>
+              {pokemon.abilities.map((ability) => (
+                <li key={ability.ability.name}>
+                  {ability.ability.name.replace("-", " ")}
+                </li>
+              ))}
+            </ul>
+          </Abilities>
         </PokemonInfo>
       </Container>
     </>

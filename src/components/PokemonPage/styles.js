@@ -139,3 +139,49 @@ export const Types = styled.div`
     }
   }
 `;
+
+export const Abilities = styled.div`
+  margin-top: 2rem;
+
+  h3 {
+    font-size: 1.4rem;
+    color: ${theme.colors.text};
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    @media (max-width: ${theme.breakpoints.tablet}) {
+      justify-content: center;
+    }
+  }
+
+  li {
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    background: ${theme.colors.dark};
+    color: ${theme.colors.white};
+    font-size: 1rem;
+    text-transform: capitalize;
+    font-weight: 500;
+    transition: all ${theme.transitions.default};
+    box-shadow: ${theme.shadows.card};
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: ${theme.shadows.hover};
+      background: ${theme.colors.primary};
+    }
+  }
+
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    li {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+`;
