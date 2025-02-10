@@ -29,7 +29,7 @@ export function PokemonBaseStats({ stats }) {
             <h4>{stat.stat.name.replace("-", " ")}</h4>
             <p>{stat.base_stat}</p>
             <StatBar>
-              <div $value={stat.base_stat} />
+              <div value={stat.base_stat} />
             </StatBar>
           </StatItem>
         ))}

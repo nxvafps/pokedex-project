@@ -19,8 +19,16 @@ function PokemonForm({ onSearch }) {
       if (!response.ok) {
         throw new Error("Pokemon not found");
       }
-      const data = await response.json();
-      onSearch([data]);
+      const pokemonData = await response.json();
+      // Add move URLs to the response
+      const moves = pokemonData.moves.map((move) => ({
+        ...move,
+        move: {
+          ...move.move,
+          url: `https://pokeapi.co/api/v2/move/${move.move.name}`,
+        },
+      }));
+      onSearch([{ ...pokemonData, moves }]);
       e.target.search.value = ""; // Clear input after successful search
     } catch (error) {
       console.error("Error searching pokemon:", error);
