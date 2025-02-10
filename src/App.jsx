@@ -86,7 +86,11 @@ function App() {
     <>
       <Header />
       {selectedPokemon ? (
-        <PokemonPage pokemon={selectedPokemon} onBack={handleBack} />
+        <PokemonPage
+          pokemon={selectedPokemon}
+          onBack={handleBack}
+          onPokemonSelect={handlePokemonSelect}
+        />
       ) : (
         <>
           <PokemonForm onSearch={handleSearch} />

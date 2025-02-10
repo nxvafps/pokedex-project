@@ -9,9 +9,11 @@ import {
 import { PokemonPhysicalStats, PokemonBaseStats } from "./PokemonStats";
 import { PokemonAbilities } from "./PokemonAbilities";
 import PokemonMoves from "./PokemonMoves";
+import PokemonEvolution from "./PokemonEvolution";
 import { formatPokemonName } from "../../utils/pokemon";
+import { getPokemon } from "../../utils/api";
 
-function PokemonPage({ pokemon, onBack }) {
+function PokemonPage({ pokemon, onBack, onPokemonSelect }) {
   const primaryType = pokemon.types[0]?.type.name;
 
   const handleImageClick = () => {
@@ -19,6 +21,15 @@ function PokemonPage({ pokemon, onBack }) {
     audio.play().catch((error) => {
       console.error("Error playing Pokemon cry:", error);
     });
+  };
+
+  const handleEvolutionSelect = async (pokemonId) => {
+    try {
+      const evolutionPokemon = await getPokemon(pokemonId);
+      onPokemonSelect(evolutionPokemon);
+    } catch (error) {
+      console.error("Error fetching evolution pokemon:", error);
+    }
   };
 
   return (
@@ -44,15 +55,18 @@ function PokemonPage({ pokemon, onBack }) {
               </TypeBadge>
             ))}
           </Types>
-
           <PokemonPhysicalStats
             height={pokemon.height}
             weight={pokemon.weight}
           />
           <PokemonBaseStats stats={pokemon.stats} />
           <PokemonAbilities abilities={pokemon.abilities} />
+          <PokemonEvolution
+            evolutionChain={pokemon.evolution_chain}
+            currentPokemonId={pokemon.id}
+            onPokemonSelect={handleEvolutionSelect}
+          />
         </PokemonInfo>
-
         <PokemonMoves moves={pokemon.moves} />
       </Container>
     </>
