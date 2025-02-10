@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { theme } from "../../styles/theme";
 
 export const SearchContainer = styled.form`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 1rem;
   margin: 2rem auto;
   max-width: 400px;
