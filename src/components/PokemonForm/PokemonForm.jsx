@@ -10,7 +10,10 @@ function PokemonForm({ onSearch }) {
     setError("");
     const searchTerm = e.target.search.value.toLowerCase().trim();
 
-    if (!searchTerm) return;
+    if (!searchTerm) {
+      onSearch(null); // This will trigger the default display
+      return;
+    }
 
     try {
       const response = await fetch(
