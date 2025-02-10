@@ -11,6 +11,7 @@ export const Card = styled.div`
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 
   &:hover {
     transform: translateY(-5px) scale(1.02);
@@ -22,7 +23,7 @@ export const Card = styled.div`
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
