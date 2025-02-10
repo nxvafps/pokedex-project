@@ -17,6 +17,11 @@ function App() {
   }, [currentPage]);
 
   const handleSearch = (searchResults) => {
+    if (searchResults === null) {
+      // Reset to initial state
+      setCurrentPage("https://pokeapi.co/api/v2/pokemon?limit=12");
+      return;
+    }
     setPokemons(searchResults);
     setNextPage(null);
     setPrevPage(null);
