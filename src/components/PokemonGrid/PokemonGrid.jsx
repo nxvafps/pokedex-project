@@ -7,11 +7,16 @@ function PokemonGrid({
   nextPage,
   goToPrevPage,
   goToNextPage,
+  onPokemonSelect,
 }) {
   return (
     <Grid>
       {pokemons.map((pokemon) => (
-        <PokemonCard key={pokemon.id} pokemon={pokemon} />
+        <PokemonCard
+          key={pokemon.id}
+          pokemon={pokemon}
+          onSelect={onPokemonSelect}
+        />
       ))}
       <PaginationContainer>
         <Pagination

@@ -1,8 +1,8 @@
 import { Card, PokemonImage, PokemonNumber, PokemonName } from "./styles";
 
-function PokemonCard({ pokemon }) {
+function PokemonCard({ pokemon, onSelect }) {
   return (
-    <Card>
+    <Card onClick={() => onSelect(pokemon)}>
       <PokemonImage src={pokemon.sprites.front_default} alt={pokemon.name} />
       <PokemonNumber>#{pokemon.id.toString().padStart(3, "0")}</PokemonNumber>
       <PokemonName>
