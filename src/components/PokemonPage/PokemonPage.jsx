@@ -38,23 +38,27 @@ function PokemonPage({ pokemon, onBack, onPokemonSelect }) {
         ← Back
       </BackButton>
       <Container>
-        <StyledImage
-          src={pokemon.sprites.front_default}
-          alt={pokemon.name}
-          onClick={handleImageClick}
-          style={{ cursor: "pointer" }}
-          title="Click to hear cry"
-        />
         <PokemonInfo $primaryType={primaryType}>
-          <h2>{formatPokemonName(pokemon.name)}</h2>
-          <p>#{pokemon.id.toString().padStart(3, "0")}</p>
-          <Types>
-            {pokemon.types.map((type) => (
-              <TypeBadge key={type.type.name} type={type.type.name}>
-                {type.type.name}
-              </TypeBadge>
-            ))}
-          </Types>
+          <div className="pokemon-header">
+            <StyledImage
+              src={pokemon.sprites.front_default}
+              alt={pokemon.name}
+              onClick={handleImageClick}
+              style={{ cursor: "pointer" }}
+              title="Click to hear cry"
+            />
+            <div className="pokemon-details">
+              <h2>{formatPokemonName(pokemon.name)}</h2>
+              <p>#{pokemon.id.toString().padStart(3, "0")}</p>
+              <Types>
+                {pokemon.types.map((type) => (
+                  <TypeBadge key={type.type.name} type={type.type.name}>
+                    {type.type.name}
+                  </TypeBadge>
+                ))}
+              </Types>
+            </div>
+          </div>
           <PokemonPhysicalStats
             height={pokemon.height}
             weight={pokemon.weight}
