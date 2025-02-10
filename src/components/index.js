@@ -4,6 +4,7 @@ import { Pagination } from "./Pagination";
 import { PokemonGrid } from "./PokemonGrid";
 import { PokemonForm } from "./PokemonForm";
 import { PokemonPage } from "./PokemonPage";
+import { Footer } from "./Footer";
 
 export {
   Header,
@@ -12,4 +13,5 @@ export {
   PokemonGrid,
   PokemonForm,
   PokemonPage,
+  Footer,
 };

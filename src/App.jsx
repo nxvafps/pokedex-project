@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { Header, PokemonGrid, PokemonForm, PokemonPage } from "./components";
+import {
+  Header,
+  PokemonGrid,
+  PokemonForm,
+  PokemonPage,
+  Footer,
+} from "./components";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
@@ -18,7 +24,6 @@ function App() {
 
   const handleSearch = (searchResults) => {
     if (searchResults === null) {
-      // Reset to initial state
       setCurrentPage("https://pokeapi.co/api/v2/pokemon?limit=12");
       return;
     }
@@ -44,7 +49,6 @@ function App() {
         data.results.map(async (pokemon) => {
           const res = await fetch(`${pokemon.url}`);
           const pokemonData = await res.json();
-          // Fetch complete move data for each move
           const moves = pokemonData.moves.map((move) => ({
             ...move,
             move: {
@@ -94,6 +98,7 @@ function App() {
           )}
         </>
       )}
+      <Footer />
     </>
   );
 }
