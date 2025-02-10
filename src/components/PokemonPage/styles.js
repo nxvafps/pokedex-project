@@ -35,11 +35,19 @@ export const Container = styled.div`
 
 export const PokemonInfo = styled.div`
   text-align: center;
-  background: ${theme.colors.white};
+  background: linear-gradient(
+    to bottom right,
+    ${(props) =>
+      `${theme.colors.types[props.$primaryType]}10` || theme.colors.white},
+    ${theme.colors.white}
+  );
   padding: 2rem;
   border-radius: 16px;
   box-shadow: ${theme.shadows.card};
   transition: all ${theme.transitions.default};
+  border: 1px solid
+    ${(props) =>
+      `${theme.colors.types[props.$primaryType]}20` || theme.colors.background};
 
   &:hover {
     box-shadow: ${theme.shadows.cardHover};
@@ -51,7 +59,8 @@ export const PokemonInfo = styled.div`
 
   h2 {
     font-size: 2.5rem;
-    color: ${theme.colors.text};
+    color: ${(props) =>
+      theme.colors.types[props.$primaryType] || theme.colors.text};
     margin-bottom: 0.5rem;
     text-transform: capitalize;
     position: relative;
@@ -64,7 +73,8 @@ export const PokemonInfo = styled.div`
       left: 0;
       width: 100%;
       height: 4px;
-      background: ${theme.colors.primary};
+      background: ${(props) =>
+        theme.colors.types[props.$primaryType] || theme.colors.primary};
       border-radius: 2px;
       transform: scaleX(0);
       transform-origin: right;
@@ -156,23 +166,22 @@ export const Types = styled.div`
   @media (min-width: ${theme.breakpoints.tablet}) {
     justify-content: flex-start;
   }
+`;
 
-  span {
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-transform: capitalize;
-    color: ${theme.colors.white};
-    background: ${(props) =>
-      (props.type && theme.colors.types[props.type]) || theme.colors.primary};
-    box-shadow: ${theme.shadows.card};
-    transition: transform ${theme.transitions.spring};
+export const TypeBadge = styled.span`
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  color: ${theme.colors.white};
+  background: ${({ type }) => theme.colors.types[type] || theme.colors.primary};
+  box-shadow: ${theme.shadows.card};
+  transition: transform ${theme.transitions.spring};
 
-    &:hover {
-      transform: scale(1.05);
-      box-shadow: ${theme.shadows.cardHover};
-    }
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: ${theme.shadows.cardHover};
   }
 `;
 
@@ -414,7 +423,8 @@ export const MoveDescription = styled(AbilityDescription)`
         color: ${theme.colors.text};
 
         &.type {
-          background: ${theme.colors.primary};
+          background: ${({ moveType }) =>
+            theme.colors.types[moveType] || theme.colors.primary};
           color: ${theme.colors.white};
           text-transform: capitalize;
         }
