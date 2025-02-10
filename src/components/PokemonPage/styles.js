@@ -21,77 +21,129 @@ const spin = keyframes`
 export const Container = styled.div`
   display: grid;
   gap: 2rem;
-  padding: 2rem;
+  padding: ${theme.layout.contentPadding};
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: ${theme.layout.maxWidth};
+  animation: ${slideIn} 0.5s ease-out;
 
   @media (min-width: ${theme.breakpoints.tablet}) {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: minmax(300px, auto) 1fr;
     align-items: start;
+    gap: 3rem;
   }
 `;
 
 export const PokemonInfo = styled.div`
   text-align: center;
+  background: ${theme.colors.white};
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: ${theme.shadows.card};
+  transition: all ${theme.transitions.default};
+
+  &:hover {
+    box-shadow: ${theme.shadows.cardHover};
+  }
 
   @media (min-width: ${theme.breakpoints.tablet}) {
     text-align: left;
   }
 
   h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: ${theme.colors.text};
     margin-bottom: 0.5rem;
     text-transform: capitalize;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: ${theme.colors.primary};
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform ${theme.transitions.spring};
+    }
+
+    &:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
   }
 
   p {
     color: ${theme.colors.textLight};
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
   }
 `;
 
 export const BackButton = styled.button`
   position: fixed;
-  top: 5rem;
+  top: calc(${theme.layout.headerHeight} + 1rem);
   left: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   background: ${theme.colors.dark};
   color: ${theme.colors.white};
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all ${theme.transitions.default};
+  transition: all ${theme.transitions.spring};
   z-index: 10;
+  box-shadow: ${theme.shadows.card};
 
   &:hover {
     background: ${theme.colors.primary};
-    transform: translateX(2px);
+    transform: translateX(4px);
+    box-shadow: ${theme.shadows.cardHover};
   }
 
-  @media (min-width: ${theme.breakpoints.tablet}) {
-    position: absolute;
-    top: 6rem;
-    left: 2rem;
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    top: calc(${theme.layout.headerHeight} * 0.8 + 0.5rem);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
 `;
 
 export const StyledImage = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   margin: 0 auto;
   image-rendering: pixelated;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-  transition: transform ${theme.transitions.hover};
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+  transition: all ${theme.transitions.spring};
+  animation: bounce 1s ${theme.transitions.spring} infinite alternate;
+
+  @keyframes bounce {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-10px);
+    }
+  }
 
   &:hover {
+    filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.2));
     transform: scale(1.1);
+    animation: none;
   }
 
   @media (min-width: ${theme.breakpoints.tablet}) {
     width: 300px;
     height: 300px;
+  }
+
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    width: 200px;
+    height: 200px;
   }
 `;
 
@@ -112,8 +164,14 @@ export const Types = styled.div`
     font-weight: 500;
     text-transform: capitalize;
     color: ${theme.colors.white};
-    background: ${theme.colors.primary};
+    background: ${props => props.type && theme.colors.types[props.type] || theme.colors.primary};
     box-shadow: ${theme.shadows.card};
+    transition: transform ${theme.transitions.spring};
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: ${theme.shadows.cardHover};
+    }
   }
 `;
 
@@ -167,6 +225,12 @@ export const StatItem = styled.div`
   background: ${theme.colors.background};
   border-radius: 8px;
   text-align: center;
+  transition: transform ${theme.transitions.spring};
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: ${theme.shadows.hover};
+  }
 
   h4 {
     color: ${theme.colors.textLight};
@@ -184,17 +248,26 @@ export const StatItem = styled.div`
 
 export const StatBar = styled.div`
   width: 100%;
-  height: 6px;
+  height: 8px;
   background: ${theme.colors.background};
-  border-radius: 3px;
+  border-radius: 4px;
   margin-top: 0.5rem;
   overflow: hidden;
+  box-shadow: ${theme.shadows.inset};
 
   div {
     height: 100%;
-    background: ${theme.colors.primary};
-    width: ${(props) => Math.min((props.value / 255) * 100, 100)}%;
-    transition: width 1s ease-out;
+    background: ${props => {
+      const value = props.value;
+      if (value >= 150) return theme.colors.types.dragon;
+      if (value >= 100) return theme.colors.types.fire;
+      if (value >= 70) return theme.colors.types.grass;
+      if (value >= 40) return theme.colors.types.water;
+      return theme.colors.types.normal;
+    }};
+    width: ${props => Math.min((props.value / 255) * 100, 100)}%;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: ${theme.shadows.card};
   }
 `;
 
@@ -221,7 +294,7 @@ export const AbilityButton = styled.button`
   font-size: 1rem;
   text-transform: capitalize;
   font-weight: 500;
-  transition: all ${theme.transitions.default};
+  transition: all ${theme.transitions.spring};
   border: 2px solid
     ${(props) =>
       props.$isSelected ? theme.colors.primaryHover : "transparent"};
