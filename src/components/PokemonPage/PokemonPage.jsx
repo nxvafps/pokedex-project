@@ -11,13 +11,26 @@ import PokemonMoves from "./PokemonMoves";
 import { formatPokemonName } from "../../utils/pokemon";
 
 function PokemonPage({ pokemon, onBack }) {
+  const handleImageClick = () => {
+    const audio = new Audio(pokemon.cries.latest);
+    audio.play().catch((error) => {
+      console.error("Error playing Pokemon cry:", error);
+    });
+  };
+
   return (
     <>
       <BackButton onClick={onBack} aria-label="Go back">
         ← Back
       </BackButton>
       <Container>
-        <StyledImage src={pokemon.sprites.front_default} alt={pokemon.name} />
+        <StyledImage
+          src={pokemon.sprites.front_default}
+          alt={pokemon.name}
+          onClick={handleImageClick}
+          style={{ cursor: "pointer" }}
+          title="Click to hear cry"
+        />
         <PokemonInfo>
           <h2>{formatPokemonName(pokemon.name)}</h2>
           <p>#{pokemon.id.toString().padStart(3, "0")}</p>
