@@ -9,6 +9,10 @@ import {
   AbilityButton,
   AbilityDescription,
   LoadingSpinner,
+  PhysicalStats,
+  StatsGrid,
+  StatItem,
+  StatBar,
 } from "./styles";
 
 function PokemonPage({ pokemon, onBack }) {
@@ -45,6 +49,19 @@ function PokemonPage({ pokemon, onBack }) {
     }
   };
 
+  const formatHeight = (height) => {
+    const meters = height / 10;
+    const feet = Math.floor(meters * 3.281);
+    const inches = Math.round((meters * 3.281 - feet) * 12);
+    return `${meters}m (${feet}'${inches}")`;
+  };
+
+  const formatWeight = (weight) => {
+    const kg = weight / 10;
+    const lbs = Math.round(kg * 2.205);
+    return `${kg}kg (${lbs}lbs)`;
+  };
+
   return (
     <>
       <BackButton onClick={onBack} aria-label="Go back">
@@ -62,6 +79,36 @@ function PokemonPage({ pokemon, onBack }) {
               <span key={type.type.name}>{type.type.name}</span>
             ))}
           </Types>
+
+          <PhysicalStats>
+            <h3>Physical Characteristics</h3>
+            <StatsGrid>
+              <StatItem>
+                <h4>Height</h4>
+                <p>{formatHeight(pokemon.height)}</p>
+              </StatItem>
+              <StatItem>
+                <h4>Weight</h4>
+                <p>{formatWeight(pokemon.weight)}</p>
+              </StatItem>
+            </StatsGrid>
+          </PhysicalStats>
+
+          <PhysicalStats>
+            <h3>Base Stats</h3>
+            <StatsGrid>
+              {pokemon.stats.map((stat) => (
+                <StatItem key={stat.stat.name}>
+                  <h4>{stat.stat.name.replace("-", " ")}</h4>
+                  <p>{stat.base_stat}</p>
+                  <StatBar>
+                    <div $value={stat.base_stat} />
+                  </StatBar>
+                </StatItem>
+              ))}
+            </StatsGrid>
+          </PhysicalStats>
+
           <Abilities>
             <h3>Abilities</h3>
             <div role="tablist">
