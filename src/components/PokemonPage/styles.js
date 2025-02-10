@@ -240,6 +240,51 @@ export const AbilityButton = styled.button`
   }
 `;
 
+// Moves List styles
+export const Moves = styled(PhysicalStats)`
+  grid-column: 1 / -1;
+  width: 100%;
+
+  .moves-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  button {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background: ${theme.colors.dark};
+    color: ${theme.colors.white};
+    border: none;
+    font-weight: 500;
+    transition: all ${theme.transitions.default};
+
+    &:hover {
+      background: ${theme.colors.primary};
+      transform: translateY(-2px);
+    }
+  }
+`;
+
+export const MoveItem = styled.div`
+  padding: 0.75rem 1rem;
+  background: ${theme.colors.background};
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  color: ${theme.colors.text};
+  box-shadow: ${theme.shadows.card};
+  transition: transform ${theme.transitions.default};
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: ${theme.shadows.hover};
+  }
+`;
+
 // Animations
 const slideIn = keyframes`
   from {

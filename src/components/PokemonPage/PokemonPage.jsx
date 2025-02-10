@@ -7,6 +7,7 @@ import {
 } from "./styles";
 import { PokemonPhysicalStats, PokemonBaseStats } from "./PokemonStats";
 import { PokemonAbilities } from "./PokemonAbilities";
+import PokemonMoves from "./PokemonMoves";
 import { formatPokemonName } from "../../utils/pokemon";
 
 function PokemonPage({ pokemon, onBack }) {
@@ -35,6 +36,8 @@ function PokemonPage({ pokemon, onBack }) {
 
           <PokemonAbilities abilities={pokemon.abilities} />
         </PokemonInfo>
+
+        <PokemonMoves moves={pokemon.moves} />
       </Container>
     </>
   );
