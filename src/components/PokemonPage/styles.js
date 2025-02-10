@@ -58,7 +58,7 @@ export const PokemonInfo = styled.div`
     display: inline-block;
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: -4px;
       left: 0;
@@ -164,7 +164,8 @@ export const Types = styled.div`
     font-weight: 500;
     text-transform: capitalize;
     color: ${theme.colors.white};
-    background: ${props => props.type && theme.colors.types[props.type] || theme.colors.primary};
+    background: ${(props) =>
+      (props.type && theme.colors.types[props.type]) || theme.colors.primary};
     box-shadow: ${theme.shadows.card};
     transition: transform ${theme.transitions.spring};
 
@@ -257,7 +258,7 @@ export const StatBar = styled.div`
 
   div {
     height: 100%;
-    background: ${props => {
+    background: ${(props) => {
       const value = props.value;
       if (value >= 150) return theme.colors.types.dragon;
       if (value >= 100) return theme.colors.types.fire;
@@ -265,7 +266,7 @@ export const StatBar = styled.div`
       if (value >= 40) return theme.colors.types.water;
       return theme.colors.types.normal;
     }};
-    width: ${props => Math.min((props.value / 255) * 100, 100)}%;
+    width: ${(props) => Math.min((props.value / 255) * 100, 100)}%;
     transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: ${theme.shadows.card};
   }
