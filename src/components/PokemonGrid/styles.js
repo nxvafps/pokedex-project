@@ -6,18 +6,19 @@ export const Grid = styled.div`
   gap: 2rem;
   padding: 2rem;
   margin: 0 auto;
+  max-width: ${theme.layout.maxWidth};
 
   @media (min-width: ${theme.breakpoints.mobile}) {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    padding: ${theme.layout.contentPadding};
   }
 
   @media (min-width: ${theme.breakpoints.tablet}) {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
   }
 
   @media (min-width: ${theme.breakpoints.desktop}) {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 1280px;
+    gap: 3rem;
   }
 `;
 
@@ -27,4 +28,8 @@ export const PaginationContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   margin-top: 2rem;
+  padding: 1rem;
+  background: ${theme.colors.background};
+  border-radius: 12px;
+  box-shadow: ${theme.shadows.card};
 `;

@@ -6,24 +6,45 @@ export const SearchContainer = styled.form`
   grid-template-columns: 1fr auto;
   gap: 1rem;
   margin: 2rem auto;
-  max-width: 400px;
-  padding: 0 1rem;
+  max-width: 500px;
+  padding: 1.5rem;
+  background: ${theme.colors.white};
+  border-radius: 12px;
+  box-shadow: ${theme.shadows.card};
+  transition: transform ${theme.transitions.default};
+
+  &:focus-within {
+    transform: scale(1.02);
+    box-shadow: ${theme.shadows.cardHover};
+  }
+
+  .error-message {
+    grid-column: 1 / -1;
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: #fff5f5;
+    border-radius: 4px;
+    border: 1px solid #dc3545;
+  }
 `;
 
 export const SearchInput = styled.input`
   flex: 1;
   padding: 0.75rem 1.2rem;
-  border: 2px solid ${theme.colors.dark};
+  border: 2px solid ${theme.colors.background};
   border-radius: 8px;
   font-size: 1rem;
   background: ${theme.colors.background};
   color: ${theme.colors.text};
-  transition: all ${theme.transitions.default};
+  transition: all ${theme.transitions.spring};
 
   &:focus {
     outline: none;
     border-color: ${theme.colors.primary};
     box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.2);
+    transform: translateY(-1px);
   }
 
   &::placeholder {
@@ -40,20 +61,38 @@ export const SearchButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all ${theme.transitions.default};
+  transition: all ${theme.transitions.spring};
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform ${theme.transitions.default};
+  }
 
   img {
     width: 24px;
     height: 24px;
-    transition: transform ${theme.transitions.default};
+    transition: transform ${theme.transitions.spring};
   }
 
   &:hover {
     background: ${theme.colors.primary};
     transform: translateY(-2px);
 
+    &::before {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
     img {
-      transform: rotate(15deg);
+      transform: rotate(15deg) scale(1.1);
     }
   }
 
