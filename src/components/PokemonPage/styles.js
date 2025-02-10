@@ -234,3 +234,84 @@ export const LoadingSpinner = styled.div`
   border-radius: 50%;
   animation: ${spin} 0.8s linear infinite;
 `;
+
+export const PhysicalStats = styled.div`
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: ${theme.colors.white};
+  border-radius: 12px;
+  box-shadow: ${theme.shadows.card};
+
+  h3 {
+    font-size: 1.4rem;
+    color: ${theme.colors.text};
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    position: relative;
+    text-align: center;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: ${theme.colors.primary};
+      border-radius: 2px;
+    }
+
+    @media (min-width: ${theme.breakpoints.tablet}) {
+      text-align: left;
+
+      &:after {
+        left: 0;
+        transform: none;
+      }
+    }
+  }
+`;
+
+export const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+`;
+
+export const StatItem = styled.div`
+  padding: 1rem;
+  background: ${theme.colors.background};
+  border-radius: 8px;
+  text-align: center;
+
+  h4 {
+    color: ${theme.colors.textLight};
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-transform: capitalize;
+  }
+
+  p {
+    color: ${theme.colors.text};
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+`;
+
+export const StatBar = styled.div`
+  width: 100%;
+  height: 6px;
+  background: ${theme.colors.background};
+  border-radius: 3px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+
+  div {
+    height: 100%;
+    background: ${theme.colors.primary};
+    width: ${(props) => Math.min((props.$value / 255) * 100, 100)}%;
+    transition: width 1s ease-out;
+  }
+`;
