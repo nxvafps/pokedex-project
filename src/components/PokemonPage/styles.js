@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { theme } from "../../styles/theme";
 
+// Layout components
 export const Container = styled.div`
   display: grid;
   gap: 2rem;
@@ -11,24 +12,6 @@ export const Container = styled.div`
   @media (min-width: ${theme.breakpoints.tablet}) {
     grid-template-columns: auto 1fr;
     align-items: start;
-  }
-`;
-
-export const StyledImage = styled.img`
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-  image-rendering: pixelated;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-  transition: transform ${theme.transitions.hover};
-
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  @media (min-width: ${theme.breakpoints.tablet}) {
-    width: 300px;
-    height: 300px;
   }
 `;
 
@@ -53,6 +36,7 @@ export const PokemonInfo = styled.div`
   }
 `;
 
+// Navigation
 export const BackButton = styled.button`
   position: fixed;
   top: 5rem;
@@ -78,6 +62,25 @@ export const BackButton = styled.button`
   }
 `;
 
+// Pokemon visuals
+export const StyledImage = styled.img`
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: transform ${theme.transitions.hover};
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  @media (min-width: ${theme.breakpoints.tablet}) {
+    width: 300px;
+    height: 300px;
+  }
+`;
+
 export const Types = styled.div`
   display: flex;
   gap: 0.75rem;
@@ -100,141 +103,7 @@ export const Types = styled.div`
   }
 `;
 
-export const Abilities = styled.div`
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background: ${theme.colors.white};
-  border-radius: 12px;
-  box-shadow: ${theme.shadows.card};
-
-  h3 {
-    font-size: 1.4rem;
-    color: ${theme.colors.text};
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-    position: relative;
-    text-align: center;
-
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: ${theme.colors.primary};
-      border-radius: 2px;
-    }
-
-    @media (min-width: ${theme.breakpoints.tablet}) {
-      text-align: left;
-
-      &:after {
-        left: 0;
-        transform: none;
-      }
-    }
-  }
-
-  div[role="tablist"] {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin: 1rem 0;
-    justify-content: center;
-
-    @media (min-width: ${theme.breakpoints.tablet}) {
-      justify-content: flex-start;
-    }
-  }
-`;
-
-export const AbilityButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  border-radius: 25px;
-  background: ${(props) =>
-    props.$isSelected ? theme.colors.primary : theme.colors.dark};
-  color: ${theme.colors.white};
-  font-size: 1rem;
-  text-transform: capitalize;
-  font-weight: 500;
-  transition: all ${theme.transitions.default};
-  border: 2px solid
-    ${(props) =>
-      props.$isSelected ? theme.colors.primaryHover : "transparent"};
-  position: relative;
-  padding-left: ${(props) => (props.$isSelected ? "2rem" : "1.5rem")};
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: ${theme.shadows.hover};
-    background: ${theme.colors.primary};
-  }
-
-  ${(props) =>
-    props.$isSelected &&
-    `
-    &:before {
-      content: "•";
-      position: absolute;
-      left: 12px;
-      color: ${theme.colors.white};
-    }
-  `}
-
-  @media (max-width: ${theme.breakpoints.mobile}) {
-    padding: ${(props) =>
-      props.$isSelected ? "0.5rem 1.5rem 0.5rem 2rem" : "0.5rem 1rem"};
-    font-size: 0.9rem;
-  }
-`;
-
-const slideIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-export const AbilityDescription = styled.div`
-  margin-top: 1.5rem;
-  padding: 1.2rem;
-  background: ${theme.colors.background};
-  border-radius: 12px;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: ${theme.colors.text};
-  box-shadow: inset ${theme.shadows.card};
-  border-left: 4px solid ${theme.colors.primary};
-  animation: ${slideIn} 0.3s ease-out;
-
-  @media (max-width: ${theme.breakpoints.mobile}) {
-    padding: 1rem;
-    font-size: 0.9rem;
-  }
-`;
-
-const spin = keyframes`
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-export const LoadingSpinner = styled.div`
-  width: 24px;
-  height: 24px;
-  margin: 0 auto;
-  border: 3px solid ${theme.colors.background};
-  border-top-color: ${theme.colors.primary};
-  border-radius: 50%;
-  animation: ${spin} 0.8s linear infinite;
-`;
-
+// Stats section styles
 export const PhysicalStats = styled.div`
   margin-top: 2rem;
   padding: 1.5rem;
@@ -313,5 +182,107 @@ export const StatBar = styled.div`
     background: ${theme.colors.primary};
     width: ${(props) => Math.min((props.$value / 255) * 100, 100)}%;
     transition: width 1s ease-out;
+  }
+`;
+
+// Abilities section styles
+export const Abilities = styled(PhysicalStats)`
+  div[role="tablist"] {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+    justify-content: center;
+
+    @media (min-width: ${theme.breakpoints.tablet}) {
+      justify-content: flex-start;
+    }
+  }
+`;
+
+export const AbilityButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  background: ${(props) =>
+    props.$isSelected ? theme.colors.primary : theme.colors.dark};
+  color: ${theme.colors.white};
+  font-size: 1rem;
+  text-transform: capitalize;
+  font-weight: 500;
+  transition: all ${theme.transitions.default};
+  border: 2px solid
+    ${(props) =>
+      props.$isSelected ? theme.colors.primaryHover : "transparent"};
+  position: relative;
+  padding-left: ${(props) => (props.$isSelected ? "2rem" : "1.5rem")};
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: ${theme.shadows.hover};
+    background: ${theme.colors.primary};
+  }
+
+  ${(props) =>
+    props.$isSelected &&
+    `
+    &:before {
+      content: "•";
+      position: absolute;
+      left: 12px;
+      color: ${theme.colors.white};
+    }
+  `}
+
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    padding: ${(props) =>
+      props.$isSelected ? "0.5rem 1.5rem 0.5rem 2rem" : "0.5rem 1rem"};
+    font-size: 0.9rem;
+  }
+`;
+
+// Animations
+const slideIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+// Loading and animation components
+export const LoadingSpinner = styled.div`
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  border: 3px solid ${theme.colors.background};
+  border-top-color: ${theme.colors.primary};
+  border-radius: 50%;
+  animation: ${spin} 0.8s linear infinite;
+`;
+
+export const AbilityDescription = styled.div`
+  margin-top: 1.5rem;
+  padding: 1.2rem;
+  background: ${theme.colors.background};
+  border-radius: 12px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: ${theme.colors.text};
+  box-shadow: inset ${theme.shadows.card};
+  border-left: 4px solid ${theme.colors.primary};
+  animation: ${slideIn} 0.3s ease-out;
+
+  @media (max-width: ${theme.breakpoints.mobile}) {
+    padding: 1rem;
+    font-size: 0.9rem;
   }
 `;
