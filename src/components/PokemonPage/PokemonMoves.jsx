@@ -62,7 +62,7 @@ function PokemonMoves({ moves }) {
       </div>
 
       {selectedMove && (
-        <MoveDescription moveType={moveDetails?.type}>
+        <MoveDescription $moveType={moveDetails?.type}>
           {isLoading ? (
             <LoadingSpinner aria-label="Loading move details..." />
           ) : (

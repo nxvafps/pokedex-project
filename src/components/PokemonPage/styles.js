@@ -423,8 +423,8 @@ export const MoveDescription = styled(AbilityDescription)`
         color: ${theme.colors.text};
 
         &.type {
-          background: ${({ moveType }) =>
-            theme.colors.types[moveType] || theme.colors.primary};
+          background: ${({ $moveType }) =>
+            theme.colors.types[$moveType] || theme.colors.primary};
           color: ${theme.colors.white};
           text-transform: capitalize;
         }
