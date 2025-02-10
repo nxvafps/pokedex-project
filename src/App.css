@@ -30,3 +30,14 @@
     opacity: 0.6;
   }
 }
+
+main {
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  #root {
+    padding-top: 8rem;
+    padding-inline: 2rem;
+  }
+}
