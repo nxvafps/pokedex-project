@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { Header, PokemonGrid, PokemonForm } from "./components";
+import { Header, PokemonGrid, PokemonForm, PokemonPage } from "./components";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
@@ -10,6 +10,7 @@ function App() {
   const [nextPage, setNextPage] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   useEffect(() => {
     fetchPokemons(currentPage);
@@ -19,6 +20,14 @@ function App() {
     setPokemons(searchResults);
     setNextPage(null);
     setPrevPage(null);
+  };
+
+  const handlePokemonSelect = (pokemon) => {
+    setSelectedPokemon(pokemon);
+  };
+
+  const handleBack = () => {
+    setSelectedPokemon(null);
   };
 
   const fetchPokemons = async (url) => {
@@ -52,17 +61,24 @@ function App() {
   return (
     <>
       <Header />
-      <PokemonForm onSearch={handleSearch} />
-      {loading ? (
-        <p className="loading">Loading Pokémon...</p>
+      {selectedPokemon ? (
+        <PokemonPage pokemon={selectedPokemon} onBack={handleBack} />
       ) : (
-        <PokemonGrid
-          pokemons={pokemons}
-          prevPage={prevPage}
-          nextPage={nextPage}
-          goToPrevPage={goToPrevPage}
-          goToNextPage={goToNextPage}
-        />
+        <>
+          <PokemonForm onSearch={handleSearch} />
+          {loading ? (
+            <p className="loading">Loading Pokémon...</p>
+          ) : (
+            <PokemonGrid
+              pokemons={pokemons}
+              prevPage={prevPage}
+              nextPage={nextPage}
+              goToPrevPage={goToPrevPage}
+              goToNextPage={goToNextPage}
+              onPokemonSelect={handlePokemonSelect}
+            />
+          )}
+        </>
       )}
     </>
   );
