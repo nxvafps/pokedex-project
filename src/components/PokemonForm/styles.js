@@ -4,7 +4,7 @@ import { theme } from "../../styles/theme";
 export const SearchInputWrapper = styled.div`
   position: relative;
   width: 100%;
-  z-index: 1;
+  z-index: 10;
 `;
 
 export const SearchContainer = styled.form`
@@ -19,6 +19,8 @@ export const SearchContainer = styled.form`
   box-shadow: ${theme.shadows.card};
   transition: transform ${theme.transitions.default};
   isolation: isolate; // Create a new stacking context
+  position: relative;
+  z-index: 10;
 
   &:focus-within {
     transform: scale(1.02);
@@ -50,6 +52,7 @@ export const SuggestionsList = styled.div`
   border: 1px solid ${theme.colors.background};
   max-height: 240px; // Limit height
   overflow-y: auto; // Make scrollable if many suggestions
+  z-index: 20;
 `;
 
 export const SuggestionItem = styled.div`

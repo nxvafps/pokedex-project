@@ -22,9 +22,36 @@ function App() {
     fetchPokemons(currentPage);
   }, [currentPage]);
 
-  const handleSearch = (searchResults) => {
+  const handleSearch = async (searchResults) => {
     if (searchResults === null) {
-      setCurrentPage("https://pokeapi.co/api/v2/pokemon?limit=12");
+      setPokemons([]);
+      setLoading(true);
+      try {
+        const defaultUrl = "https://pokeapi.co/api/v2/pokemon?limit=12";
+        const response = await fetch(defaultUrl);
+        const data = await response.json();
+        const pokemonDetails = await Promise.all(
+          data.results.map(async (pokemon) => {
+            const res = await fetch(`${pokemon.url}`);
+            const pokemonData = await res.json();
+            const moves = pokemonData.moves.map((move) => ({
+              ...move,
+              move: {
+                ...move.move,
+                url: `https://pokeapi.co/api/v2/move/${move.move.name}`,
+              },
+            }));
+            return { ...pokemonData, moves };
+          })
+        );
+        setPokemons(pokemonDetails);
+        setNextPage(data.next);
+        setPrevPage(data.previous);
+      } catch (error) {
+        console.error("Error fetching default pokemon:", error);
+      } finally {
+        setLoading(false);
+      }
       return;
     }
     setPokemons(searchResults);

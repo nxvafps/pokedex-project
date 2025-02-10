@@ -7,6 +7,8 @@ export const Grid = styled.div`
   padding: 2rem;
   margin: 0 auto;
   max-width: ${theme.layout.maxWidth};
+  position: relative;
+  z-index: 1;
 
   @media (min-width: ${theme.breakpoints.mobile}) {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

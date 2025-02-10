@@ -37,15 +37,15 @@ function PokemonForm({ onSearch }) {
     setSearchTerm(value);
     setError("");
 
-    if (value.length > 0) {
+    if (value.trim().length === 0) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    } else {
       const filtered = pokemonList
         .filter((name) => name.includes(value))
         .slice(0, 5); // Limit to 5 suggestions
       setSuggestions(filtered);
       setShowSuggestions(true);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
     }
   };
 
@@ -78,8 +78,10 @@ function PokemonForm({ onSearch }) {
     setError("");
     const searchValue = searchTerm.trim();
 
+    // If empty or whitespace only, trigger default view
     if (!searchValue) {
-      onSearch(null); // This will trigger the default display
+      onSearch(null);
+      setSearchTerm("");
       return;
     }
 
