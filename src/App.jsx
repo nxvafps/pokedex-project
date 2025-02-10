@@ -37,8 +37,17 @@ function App() {
       const data = await response.json();
       const pokemonDetails = await Promise.all(
         data.results.map(async (pokemon) => {
-          const res = await fetch(pokemon.url);
-          return res.json();
+          const res = await fetch(`${pokemon.url}`);
+          const pokemonData = await res.json();
+          // Fetch complete move data for each move
+          const moves = pokemonData.moves.map((move) => ({
+            ...move,
+            move: {
+              ...move.move,
+              url: `https://pokeapi.co/api/v2/move/${move.move.name}`,
+            },
+          }));
+          return { ...pokemonData, moves };
         })
       );
       setPokemons(pokemonDetails);

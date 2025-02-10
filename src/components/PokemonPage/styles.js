@@ -1,6 +1,24 @@
 import styled, { keyframes } from "styled-components";
 import { theme } from "../../styles/theme";
 
+// Animations
+const slideIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
 // Layout components
 export const Container = styled.div`
   display: grid;
@@ -270,48 +288,24 @@ export const Moves = styled(PhysicalStats)`
 
 export const MoveItem = styled.div`
   padding: 0.75rem 1rem;
-  background: ${theme.colors.background};
+  background: ${(props) =>
+    props.$isSelected ? theme.colors.primary : theme.colors.background};
+  color: ${(props) =>
+    props.$isSelected ? theme.colors.white : theme.colors.text};
   border-radius: 8px;
   text-align: center;
   font-size: 0.9rem;
   text-transform: capitalize;
-  color: ${theme.colors.text};
   box-shadow: ${theme.shadows.card};
-  transition: transform ${theme.transitions.default};
+  transition: all ${theme.transitions.default};
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: ${theme.shadows.hover};
+    background: ${theme.colors.primary};
+    color: ${theme.colors.white};
   }
-`;
-
-// Animations
-const slideIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const spin = keyframes`
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-// Loading and animation components
-export const LoadingSpinner = styled.div`
-  width: 24px;
-  height: 24px;
-  margin: 0 auto;
-  border: 3px solid ${theme.colors.background};
-  border-top-color: ${theme.colors.primary};
-  border-radius: 50%;
-  animation: ${spin} 0.8s linear infinite;
 `;
 
 export const AbilityDescription = styled.div`
@@ -330,4 +324,45 @@ export const AbilityDescription = styled.div`
     padding: 1rem;
     font-size: 0.9rem;
   }
+`;
+
+export const MoveDescription = styled(AbilityDescription)`
+  margin: 1.5rem 0;
+
+  .move-info {
+    .effect {
+      margin-bottom: 1rem;
+    }
+
+    .move-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      span {
+        padding: 0.4rem 0.8rem;
+        background: ${theme.colors.white};
+        border-radius: 6px;
+        font-size: 0.9rem;
+        color: ${theme.colors.text};
+
+        &.type {
+          background: ${theme.colors.primary};
+          color: ${theme.colors.white};
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+`;
+
+// Loading and animation components
+export const LoadingSpinner = styled.div`
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  border: 3px solid ${theme.colors.background};
+  border-top-color: ${theme.colors.primary};
+  border-radius: 50%;
+  animation: ${spin} 0.8s linear infinite;
 `;
