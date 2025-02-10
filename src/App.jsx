@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { Header, PokemonGrid } from "./components";
+import { Header, PokemonGrid, PokemonForm } from "./components";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
@@ -14,6 +14,12 @@ function App() {
   useEffect(() => {
     fetchPokemons(currentPage);
   }, [currentPage]);
+
+  const handleSearch = (searchResults) => {
+    setPokemons(searchResults);
+    setNextPage(null);
+    setPrevPage(null);
+  };
 
   const fetchPokemons = async (url) => {
     setLoading(true);
@@ -46,6 +52,7 @@ function App() {
   return (
     <>
       <Header />
+      <PokemonForm onSearch={handleSearch} />
       {loading ? (
         <p>Loading...</p>
       ) : (
