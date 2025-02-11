@@ -5,6 +5,35 @@ export const SearchInputWrapper = styled.div`
   position: relative;
   width: 100%;
   z-index: 10;
+
+  .clear-button {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: ${theme.colors.background};
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    color: ${theme.colors.textLight};
+    padding: 8px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ${theme.transitions.spring};
+
+    &:hover {
+      color: ${theme.colors.primary};
+      background: ${theme.colors.background};
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    &:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+  }
 `;
 
 export const SearchContainer = styled.form`

@@ -48,7 +48,13 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
   }, []);
 
   const handleKeyDown = (e) => {
-    if (!showSuggestions) return;
+    if (!showSuggestions) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSubmit(e);
+      }
+      return;
+    }
 
     switch (e.key) {
       case "ArrowDown":
@@ -65,6 +71,8 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
         e.preventDefault();
         if (selectedIndex >= 0) {
           handleSuggestionClick(suggestions[selectedIndex]);
+        } else {
+          handleSubmit(e);
         }
         break;
       case "Escape":
@@ -145,6 +153,15 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
     }
   };
 
+  const handleClear = () => {
+    setSearchTerm("");
+    setSuggestions([]);
+    setShowSuggestions(false);
+    setError("");
+    onSearch(null);
+    inputRef.current?.focus();
+  };
+
   return (
     <SearchContainer onSubmit={handleSubmit}>
       {error && <p className="error-message">{error}</p>}
@@ -162,6 +179,16 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
             aria-label="Search Pokemon"
             autoComplete="off"
           />
+          {searchTerm && (
+            <button
+              type="button"
+              onClick={handleClear}
+              className="clear-button"
+              aria-label="Clear search"
+            >
+              ×
+            </button>
+          )}
           {showSuggestions && suggestions.length > 0 && (
             <SuggestionsList ref={suggestionsRef}>
               {suggestions.map((suggestion, index) => (
