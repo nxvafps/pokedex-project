@@ -68,14 +68,20 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
     setSearchTerm(pokemonName);
     setShowSuggestions(false);
     setError("");
-    
+
     try {
-      const pokemonData = await getPokemon(pokemonName);
-      onPokemonSelect(pokemonData);
-      setSearchTerm("");
+      // Find all related Pokemon with similar names
+      const relatedNames = pokemonList.filter((name) =>
+        name.includes(pokemonName.toLowerCase())
+      );
+
+      const pokemonData = await Promise.all(
+        relatedNames.map(async (name) => getPokemon(name))
+      );
+      onSearch(pokemonData);
     } catch (error) {
       console.error("Error searching pokemon:", error);
-      setError("Pokemon not found. Try a different name or ID.");
+      setError("Error loading Pokemon. Please try again.");
     }
   };
 
@@ -95,21 +101,30 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
       name.includes(searchValue)
     );
 
-    if (matchingSuggestions.length > 0 && !matchingSuggestions.includes(searchValue)) {
-      setError(`Did you mean: ${matchingSuggestions.slice(0, 3).join(", ")}...?`);
-      setSuggestions(matchingSuggestions.slice(0, 5));
-      setShowSuggestions(true);
-      return;
-    }
-
-    try {
-      const pokemonData = await getPokemon(searchValue);
-      onPokemonSelect(pokemonData);
-      setSearchTerm("");
-      setShowSuggestions(false);
-    } catch (error) {
-      console.error("Error searching pokemon:", error);
-      setError("Pokemon not found. Try a different name or ID.");
+    if (matchingSuggestions.length > 0) {
+      try {
+        // Fetch details for all matching Pokemon
+        const pokemonDetails = await Promise.all(
+          matchingSuggestions.map(async (name) => {
+            return getPokemon(name);
+          })
+        );
+        onSearch(pokemonDetails);
+        // Don't clear search term so user can see what they searched for
+      } catch (error) {
+        console.error("Error fetching pokemon details:", error);
+        setError("Error loading Pokemon. Please try again.");
+      }
+    } else {
+      try {
+        // Try exact match as fallback
+        const pokemonData = await getPokemon(searchValue);
+        onPokemonSelect(pokemonData);
+        setSearchTerm("");
+      } catch (error) {
+        console.error("Error searching pokemon:", error);
+        setError("Pokemon not found. Try a different name or ID.");
+      }
     }
   };
 

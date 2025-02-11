@@ -103,7 +103,6 @@ function PokemonEvolution({
         trigger: current.evolution_details[0]?.trigger?.name,
       });
 
-      // Move to the first evolution in the chain
       current = current.evolves_to[0];
     }
 
