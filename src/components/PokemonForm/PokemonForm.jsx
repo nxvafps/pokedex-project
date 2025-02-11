@@ -16,6 +16,7 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
   const [pokemonList, setPokemonList] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const inputRef = useRef(null);
   const suggestionsRef = useRef(null);
 
@@ -46,10 +47,38 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleKeyDown = (e) => {
+    if (!showSuggestions) return;
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        setSelectedIndex((prev) =>
+          prev < suggestions.length - 1 ? prev + 1 : prev
+        );
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev > -1 ? prev - 1 : -1));
+        break;
+      case "Enter":
+        e.preventDefault();
+        if (selectedIndex >= 0) {
+          handleSuggestionClick(suggestions[selectedIndex]);
+        }
+        break;
+      case "Escape":
+        setShowSuggestions(false);
+        setSelectedIndex(-1);
+        break;
+    }
+  };
+
   const handleChange = (e) => {
     const value = e.target.value.toLowerCase();
     setSearchTerm(value);
     setError("");
+    setSelectedIndex(-1);
 
     if (value.trim().length === 0) {
       setSuggestions([]);
@@ -127,17 +156,19 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
             name="search"
             value={searchTerm}
             onChange={handleChange}
-            onFocus={() => searchTerm.trim() && setSuggestions(true)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => searchTerm.trim() && setShowSuggestions(true)}
             placeholder="Search Pokemon..."
             aria-label="Search Pokemon"
             autoComplete="off"
           />
           {showSuggestions && suggestions.length > 0 && (
             <SuggestionsList ref={suggestionsRef}>
-              {suggestions.map((suggestion) => (
+              {suggestions.map((suggestion, index) => (
                 <SuggestionItem
                   key={suggestion}
                   onClick={() => handleSuggestionClick(suggestion)}
+                  className={index === selectedIndex ? "selected" : ""}
                 >
                   {suggestion}
                 </SuggestionItem>
