@@ -10,7 +10,7 @@ import {
 } from "./styles";
 import pokeballImg from "../../assets/pokeball.png";
 
-function PokemonForm({ onSearch }) {
+function PokemonForm({ onSearch, onPokemonSelect }) {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [pokemonList, setPokemonList] = useState([]);
@@ -53,7 +53,7 @@ function PokemonForm({ onSearch }) {
     setShowSuggestions(false);
     try {
       const pokemonData = await getPokemon(pokemonName);
-      onSearch([pokemonData]);
+      onPokemonSelect(pokemonData); // Directly select the Pokemon instead of updating search results
       setSearchTerm("");
     } catch (error) {
       console.error("Error searching pokemon:", error);
@@ -74,7 +74,7 @@ function PokemonForm({ onSearch }) {
 
     try {
       const pokemonData = await getPokemon(searchValue);
-      onSearch([pokemonData]);
+      onPokemonSelect(pokemonData); // Also update submit to directly select the Pokemon
       setSearchTerm("");
     } catch (error) {
       console.error("Error searching pokemon:", error);
