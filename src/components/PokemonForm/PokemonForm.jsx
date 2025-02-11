@@ -32,7 +32,6 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
     };
     fetchPokemonList();
 
-    // Add click outside handler
     const handleClickOutside = (event) => {
       if (
         suggestionsRef.current &&
@@ -89,28 +88,24 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
       return;
     }
 
-    // Check if there are matching suggestions
     const matchingSuggestions = pokemonList.filter((name) =>
       name.includes(searchValue)
     );
 
     if (matchingSuggestions.length > 0) {
       try {
-        // Fetch details for all matching Pokemon
         const pokemonDetails = await Promise.all(
           matchingSuggestions.map(async (name) => {
             return getPokemon(name);
           })
         );
         onSearch(pokemonDetails);
-        // Don't clear search term so user can see what they searched for
       } catch (error) {
         console.error("Error fetching pokemon details:", error);
         setError("Error loading Pokemon. Please try again.");
       }
     } else {
       try {
-        // Try exact match as fallback
         const pokemonData = await getPokemon(searchValue);
         onPokemonSelect(pokemonData);
         setSearchTerm("");
