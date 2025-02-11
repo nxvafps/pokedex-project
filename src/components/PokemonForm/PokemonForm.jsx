@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { api, getPokemon } from "../../utils/api";
 import {
   SearchContainer,
@@ -16,6 +16,8 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
   const [pokemonList, setPokemonList] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const inputRef = useRef(null);
+  const suggestionsRef = useRef(null);
 
   useEffect(() => {
     const fetchPokemonList = async () => {
@@ -29,6 +31,20 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
       }
     };
     fetchPokemonList();
+
+    // Add click outside handler
+    const handleClickOutside = (event) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target) &&
+        !inputRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleChange = (e) => {
@@ -42,7 +58,7 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
     } else {
       const filtered = pokemonList
         .filter((name) => name.includes(value))
-        .slice(0, 5); // Limit to 5 suggestions
+        .slice(0, 5);
       setSuggestions(filtered);
       setShowSuggestions(true);
     }
@@ -51,9 +67,11 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
   const handleSuggestionClick = async (pokemonName) => {
     setSearchTerm(pokemonName);
     setShowSuggestions(false);
+    setError("");
+    
     try {
       const pokemonData = await getPokemon(pokemonName);
-      onPokemonSelect(pokemonData); // Directly select the Pokemon instead of updating search results
+      onPokemonSelect(pokemonData);
       setSearchTerm("");
     } catch (error) {
       console.error("Error searching pokemon:", error);
@@ -64,7 +82,7 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    const searchValue = searchTerm.trim();
+    const searchValue = searchTerm.trim().toLowerCase();
 
     if (!searchValue) {
       onSearch(null);
@@ -72,10 +90,23 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
       return;
     }
 
+    // Check if there are matching suggestions
+    const matchingSuggestions = pokemonList.filter((name) =>
+      name.includes(searchValue)
+    );
+
+    if (matchingSuggestions.length > 0 && !matchingSuggestions.includes(searchValue)) {
+      setError(`Did you mean: ${matchingSuggestions.slice(0, 3).join(", ")}...?`);
+      setSuggestions(matchingSuggestions.slice(0, 5));
+      setShowSuggestions(true);
+      return;
+    }
+
     try {
       const pokemonData = await getPokemon(searchValue);
-      onPokemonSelect(pokemonData); // Also update submit to directly select the Pokemon
+      onPokemonSelect(pokemonData);
       setSearchTerm("");
+      setShowSuggestions(false);
     } catch (error) {
       console.error("Error searching pokemon:", error);
       setError("Pokemon not found. Try a different name or ID.");
@@ -84,33 +115,37 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
 
   return (
     <SearchContainer onSubmit={handleSubmit}>
-      <SearchInputWrapper>
-        <SearchInput
-          type="text"
-          name="search"
-          value={searchTerm}
-          onChange={handleChange}
-          placeholder="Search Pokemon..."
-          aria-label="Search Pokemon"
-          autoComplete="off"
-        />
-        {showSuggestions && suggestions.length > 0 && (
-          <SuggestionsList>
-            {suggestions.map((suggestion) => (
-              <SuggestionItem
-                key={suggestion}
-                onClick={() => handleSuggestionClick(suggestion)}
-              >
-                {suggestion}
-              </SuggestionItem>
-            ))}
-          </SuggestionsList>
-        )}
-      </SearchInputWrapper>
-      <SearchButton type="submit" aria-label="Search">
-        <img src={pokeballImg} alt="" />
-      </SearchButton>
       {error && <p className="error-message">{error}</p>}
+      <div className="search-controls">
+        <SearchInputWrapper>
+          <SearchInput
+            ref={inputRef}
+            type="text"
+            name="search"
+            value={searchTerm}
+            onChange={handleChange}
+            onFocus={() => searchTerm.trim() && setSuggestions(true)}
+            placeholder="Search Pokemon..."
+            aria-label="Search Pokemon"
+            autoComplete="off"
+          />
+          {showSuggestions && suggestions.length > 0 && (
+            <SuggestionsList ref={suggestionsRef}>
+              {suggestions.map((suggestion) => (
+                <SuggestionItem
+                  key={suggestion}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  {suggestion}
+                </SuggestionItem>
+              ))}
+            </SuggestionsList>
+          )}
+        </SearchInputWrapper>
+        <SearchButton type="submit" aria-label="Search">
+          <img src={pokeballImg} alt="" />
+        </SearchButton>
+      </div>
     </SearchContainer>
   );
 }

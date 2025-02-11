@@ -8,40 +8,44 @@ export const SearchInputWrapper = styled.div`
 `;
 
 export const SearchContainer = styled.form`
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
   margin: 2rem auto;
   max-width: 500px;
-  padding: 1.5rem;
-  background: ${theme.colors.white};
-  border-radius: 12px;
-  box-shadow: ${theme.shadows.card};
-  transition: transform ${theme.transitions.default};
-  isolation: isolate; // Create a new stacking context
-  position: relative;
-  z-index: 10;
 
-  &:focus-within {
-    transform: scale(1.02);
-    box-shadow: ${theme.shadows.cardHover};
+  .search-controls {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: ${theme.colors.white};
+    border-radius: 12px;
+    box-shadow: ${theme.shadows.card};
+    transition: transform ${theme.transitions.default};
+    isolation: isolate;
+    position: relative;
+    z-index: 10;
   }
 
   .error-message {
-    grid-column: 1 / -1;
     color: #dc3545;
     font-size: 0.9rem;
-    margin-top: 0.5rem;
     padding: 0.5rem;
     background: #fff5f5;
     border-radius: 4px;
     border: 1px solid #dc3545;
+    margin-bottom: 0.5rem;
+  }
+
+  &:focus-within .search-controls {
+    transform: scale(1.02);
+    box-shadow: ${theme.shadows.cardHover};
   }
 `;
 
 export const SuggestionsList = styled.div`
   position: absolute;
-  top: calc(100% + 8px); // Increased spacing
+  top: calc(100% + 8px);
   left: 0;
   right: 0;
   background: ${theme.colors.white};
@@ -50,8 +54,8 @@ export const SuggestionsList = styled.div`
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   border: 1px solid ${theme.colors.background};
-  max-height: 240px; // Limit height
-  overflow-y: auto; // Make scrollable if many suggestions
+  max-height: 240px;
+  overflow-y: auto;
   z-index: 20;
 `;
 
