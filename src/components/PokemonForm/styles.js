@@ -67,7 +67,8 @@ export const SuggestionItem = styled.div`
   color: ${theme.colors.text};
   background: ${theme.colors.white};
 
-  &:hover {
+  &:hover,
+  &.selected {
     background: ${theme.colors.background};
     color: ${theme.colors.primary};
   }
