@@ -72,6 +72,7 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
         if (selectedIndex >= 0) {
           handleSuggestionClick(suggestions[selectedIndex]);
         } else {
+          setShowSuggestions(false);
           handleSubmit(e);
         }
         break;
