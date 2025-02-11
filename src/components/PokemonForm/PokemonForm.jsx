@@ -70,15 +70,8 @@ function PokemonForm({ onSearch, onPokemonSelect }) {
     setError("");
 
     try {
-      // Find all related Pokemon with similar names
-      const relatedNames = pokemonList.filter((name) =>
-        name.includes(pokemonName.toLowerCase())
-      );
-
-      const pokemonData = await Promise.all(
-        relatedNames.map(async (name) => getPokemon(name))
-      );
-      onSearch(pokemonData);
+      const pokemonData = await getPokemon(pokemonName);
+      onPokemonSelect(pokemonData);
     } catch (error) {
       console.error("Error searching pokemon:", error);
       setError("Error loading Pokemon. Please try again.");
