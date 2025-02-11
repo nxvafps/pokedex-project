@@ -15,7 +15,7 @@ function Footer() {
         </p>
         <p>
           <a
-            href="https://github.com/nxvafps/fe-react-data-visualisation"
+            href="https://github.com/nxvafps/pokedex-project"
             target="_blank"
             rel="noopener noreferrer"
           >
