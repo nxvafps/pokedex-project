@@ -138,7 +138,9 @@ export const PokemonInfo = styled.div`
 
 export const BackButton = styled.button`
   position: fixed;
-  top: calc(${theme.layout.headerHeight} + 1rem);
+  top: calc(
+    ${theme.layout.headerHeight} + 2.5rem
+  ); // Increased from 1rem to 2.5rem
   left: 1rem;
   padding: 0.75rem 1.5rem;
   background: ${theme.colors.dark};
@@ -157,7 +159,7 @@ export const BackButton = styled.button`
   }
 
   @media (max-width: ${theme.breakpoints.mobile}) {
-    top: calc(${theme.layout.headerHeight} * 0.8 + 0.5rem);
+    top: calc(${theme.layout.headerHeight} * 0.8 + 2rem); // Adjusted for mobile
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
