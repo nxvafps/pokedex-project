@@ -20,14 +20,18 @@ const spin = keyframes`
 
 export const Container = styled.div`
   display: grid;
-  gap: 2rem;
-  padding: ${theme.layout.contentPadding};
+  gap: 1.5rem;
+  padding: 3rem 1rem 1rem;
   margin: 0 auto;
   max-width: ${theme.layout.maxWidth};
   animation: ${slideIn} 0.5s ease-out;
 
-  @media (min-width: ${theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
+  ${theme.media.tablet} {
+    gap: 2rem;
+    padding: 2.5rem ${theme.layout.contentPadding} 2rem;
+  }
+
+  ${theme.media.desktop} {
     gap: 3rem;
   }
 `;
@@ -40,7 +44,7 @@ export const PokemonInfo = styled.div`
       `${theme.colors.types[props.$primaryType]}10` || theme.colors.white},
     ${theme.colors.white}
   );
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 16px;
   box-shadow: ${theme.shadows.card};
   transition: all ${theme.transitions.default};
@@ -49,6 +53,10 @@ export const PokemonInfo = styled.div`
       `${theme.colors.types[props.$primaryType]}20` || theme.colors.background};
   grid-column: 1 / -1;
 
+  ${theme.media.tablet} {
+    padding: 2rem;
+  }
+
   &:hover {
     box-shadow: ${theme.shadows.cardHover};
   }
@@ -56,10 +64,14 @@ export const PokemonInfo = styled.div`
   .pokemon-header {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
-    gap: 2.5rem;
+    gap: 1.5rem;
     align-items: start;
     margin-bottom: 2rem;
     width: 100%;
+
+    ${theme.media.tablet} {
+      gap: 2.5rem;
+    }
   }
 
   .pokemon-details {
@@ -88,7 +100,7 @@ export const PokemonInfo = styled.div`
   }
 
   h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: ${(props) =>
       theme.colors.types[props.$primaryType] || theme.colors.text};
     margin: 0;
@@ -97,6 +109,10 @@ export const PokemonInfo = styled.div`
     display: inline-block;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2);
     line-height: 1.2;
+
+    ${theme.media.tablet} {
+      font-size: 2.5rem;
+    }
 
     &::after {
       content: "";
@@ -138,11 +154,9 @@ export const PokemonInfo = styled.div`
 
 export const BackButton = styled.button`
   position: fixed;
-  top: calc(
-    ${theme.layout.headerHeight} + 2.5rem
-  ); // Increased from 1rem to 2.5rem
+  top: calc(${theme.layout.headerHeight} * 0.8 + 1.5rem + 6px);
   left: 1rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
   background: ${theme.colors.dark};
   color: ${theme.colors.white};
   border: none;
@@ -151,6 +165,13 @@ export const BackButton = styled.button`
   transition: all ${theme.transitions.spring};
   z-index: 10;
   box-shadow: ${theme.shadows.card};
+  font-size: 0.9rem;
+
+  ${theme.media.tablet} {
+    top: calc(${theme.layout.headerHeight} + 1.5rem + 6px);
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
 
   &:hover {
     background: ${theme.colors.primary};
@@ -159,20 +180,30 @@ export const BackButton = styled.button`
   }
 
   @media (max-width: ${theme.breakpoints.mobile}) {
-    top: calc(${theme.layout.headerHeight} * 0.8 + 2rem); // Adjusted for mobile
+    top: calc(${theme.layout.headerHeight} * 0.8 + 1.5rem + 6px);
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
 `;
 
 export const StyledImage = styled.img`
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   margin: 0 auto;
   image-rendering: pixelated;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
   transition: all ${theme.transitions.spring};
   animation: bounce 1s ${theme.transitions.spring} infinite alternate;
+
+  ${theme.media.tablet} {
+    width: 250px;
+    height: 250px;
+  }
+
+  ${theme.media.desktop} {
+    width: 300px;
+    height: 300px;
+  }
 
   @keyframes bounce {
     from {
@@ -301,12 +332,16 @@ export const StatItem = styled.div`
 
 export const StatBar = styled.div`
   width: 100%;
-  height: 8px;
+  height: 6px;
   background: ${theme.colors.background};
   border-radius: 4px;
   margin-top: 0.5rem;
   overflow: hidden;
   box-shadow: ${theme.shadows.inset};
+
+  ${theme.media.tablet} {
+    height: 8px;
+  }
 
   div {
     height: 100%;

@@ -83,7 +83,7 @@ function App() {
   };
 
   return (
-    <>
+    <main>
       <Header />
       {selectedPokemon ? (
         <PokemonPage
@@ -93,7 +93,10 @@ function App() {
         />
       ) : (
         <>
-          <PokemonForm onSearch={handleSearch} onPokemonSelect={handlePokemonSelect} />
+          <PokemonForm
+            onSearch={handleSearch}
+            onPokemonSelect={handlePokemonSelect}
+          />
           {loading ? (
             <p className="loading">Loading Pokémon...</p>
           ) : (
@@ -109,7 +112,7 @@ function App() {
         </>
       )}
       <Footer />
-    </>
+    </main>
   );
 }
 

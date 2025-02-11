@@ -3,23 +3,27 @@ import { theme } from "../../styles/theme";
 
 export const Grid = styled.div`
   display: grid;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 1rem;
+  padding: 1rem;
   margin: 0 auto;
   max-width: ${theme.layout.maxWidth};
-  position: relative;
-  z-index: 1;
 
-  @media (min-width: ${theme.breakpoints.mobile}) {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    padding: ${theme.layout.contentPadding};
+  ${theme.media.mobile} {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
   }
 
-  @media (min-width: ${theme.breakpoints.tablet}) {
+  ${theme.media.tablet} {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    padding: ${theme.layout.contentPadding};
+    gap: 2rem;
+  }
+
+  ${theme.media.desktop} {
     gap: 2.5rem;
   }
 
-  @media (min-width: ${theme.breakpoints.desktop}) {
+  ${theme.media.largeDesktop} {
     gap: 3rem;
   }
 `;

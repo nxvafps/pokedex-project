@@ -27,13 +27,20 @@ const EvolutionRow = styled.div`
   gap: 0;
   flex-wrap: wrap;
 
-  @media (max-width: ${theme.breakpoints.mobile}) {
+  @media (max-width: ${theme.breakpoints.tabletMax}) {
     flex-direction: column;
+    gap: 0.5rem;
   }
 
   & > div {
     display: flex;
     align-items: center;
+
+    @media (max-width: ${theme.breakpoints.tabletMax}) {
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+    }
   }
 `;
 
@@ -41,10 +48,14 @@ const EvolutionArrow = styled.div`
   color: ${theme.colors.textLight};
   font-size: 1.5rem;
   margin: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  @media (max-width: ${theme.breakpoints.mobile}) {
+  @media (max-width: ${theme.breakpoints.tabletMax}) {
     transform: rotate(90deg);
     margin: 0.5rem 0;
+    height: 2rem;
   }
 `;
 
@@ -58,6 +69,11 @@ const PokemonEvolutionCard = styled.div`
   cursor: pointer;
   transition: all ${theme.transitions.spring};
   border: 2px solid ${theme.colors.border};
+  width: 140px;
+
+  @media (max-width: ${theme.breakpoints.tabletMax}) {
+    width: 160px;
+  }
 
   &:hover {
     transform: translateY(-5px);

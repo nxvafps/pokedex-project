@@ -40,13 +40,19 @@ export const SearchContainer = styled.form`
   display: flex;
   flex-direction: column;
   margin: 2rem auto;
-  max-width: 500px;
+  max-width: 100%;
+  padding: 0 1rem;
+
+  ${theme.media.tablet} {
+    max-width: 500px;
+    padding: 0;
+  }
 
   .search-controls {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 1rem;
-    padding: 1.5rem;
+    padding: 1rem;
     background: ${theme.colors.white};
     border-radius: 12px;
     box-shadow: ${theme.shadows.card};
@@ -54,6 +60,10 @@ export const SearchContainer = styled.form`
     isolation: isolate;
     position: relative;
     z-index: 10;
+
+    ${theme.media.tablet} {
+      padding: 1.5rem;
+    }
   }
 
   .error-message {
@@ -83,18 +93,27 @@ export const SuggestionsList = styled.div`
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   border: 1px solid ${theme.colors.background};
-  max-height: 240px;
+  max-height: 200px;
   overflow-y: auto;
   z-index: 20;
+
+  ${theme.media.tablet} {
+    max-height: 240px;
+  }
 `;
 
 export const SuggestionItem = styled.div`
-  padding: 0.75rem 1.2rem;
+  padding: 0.6rem 1rem;
   cursor: pointer;
   text-transform: capitalize;
   transition: all ${theme.transitions.default};
   color: ${theme.colors.text};
   background: ${theme.colors.white};
+
+  ${theme.media.tablet} {
+    padding: 0.75rem 1.2rem;
+    font-size: 1rem;
+  }
 
   &:hover,
   &.selected {
@@ -109,13 +128,18 @@ export const SuggestionItem = styled.div`
 
 export const SearchInput = styled.input`
   flex: 1;
-  padding: 0.75rem 1.2rem;
+  padding: 0.6rem 1rem;
   border: 2px solid ${theme.colors.background};
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   background: ${theme.colors.background};
   color: ${theme.colors.text};
   transition: all ${theme.transitions.spring};
+
+  ${theme.media.tablet} {
+    font-size: 1rem;
+    padding: 0.75rem 1.2rem;
+  }
 
   &:focus {
     outline: none;

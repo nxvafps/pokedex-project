@@ -1,22 +1,31 @@
 #root {
   width: 100%;
   margin: 0 auto;
-  padding: 7rem 1rem 2rem;
+  padding: calc(4rem + 2.5rem + 6px) 1rem 2rem;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  #root {
+    padding: calc(5rem + 2rem + 6px) 1.5rem 2rem;
+  }
 }
 
 @media (min-width: 1024px) {
   #root {
-    padding-top: 8rem;
-    padding-inline: 2rem;
+    padding: calc(5rem + 2rem + 6px) 2rem 2rem;
   }
 }
 
 .loading {
   color: var(--text);
-  font-size: 1.2rem;
-  margin: 2rem 0;
-  animation: pulse 1.5s ease-in-out infinite;
+  font-size: 1.1rem;
+  margin: 1.5rem 0;
+
+  @media (min-width: 768px) {
+    font-size: 1.2rem;
+    margin: 2rem 0;
+  }
 }
 
 @keyframes pulse {
@@ -33,11 +42,7 @@
 
 main {
   flex: 1;
-}
-
-@media (min-width: 1024px) {
-  #root {
-    padding-top: 8rem;
-    padding-inline: 2rem;
-  }
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
 }

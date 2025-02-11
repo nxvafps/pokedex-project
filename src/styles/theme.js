@@ -40,6 +40,17 @@ export const theme = {
     mobile: "320px",
     tablet: "768px",
     desktop: "1024px",
+    largeDesktop: "1440px",
+    mobileMax: "767px",
+    tabletMax: "1023px",
+  },
+  media: {
+    mobile: `@media (min-width: 320px)`,
+    tablet: `@media (min-width: 768px)`,
+    desktop: `@media (min-width: 1024px)`,
+    largeDesktop: `@media (min-width: 1440px)`,
+    mobileOnly: `@media (max-width: 767px)`,
+    tabletOnly: `@media (min-width: 768px) and (max-width: 1023px)`,
   },
   transitions: {
     default: "0.2s ease",
