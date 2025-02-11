@@ -50,7 +50,7 @@ const PokemonEvolutionCard = styled.div`
   border-radius: 8px;
   cursor: pointer;
   transition: all ${theme.transitions.spring};
-  border: 2px solid transparent;
+  border: 2px solid ${theme.colors.border};
 
   &:hover {
     transform: translateY(-5px);
@@ -59,8 +59,9 @@ const PokemonEvolutionCard = styled.div`
 
   &.selected {
     background: ${theme.colors.backgroundLight};
-    border-color: ${theme.colors.primary};
+    border: 3px solid ${theme.colors.primary};
     transform: scale(1.05);
+    box-shadow: 0 0 0 2px ${theme.colors.primary}33;
   }
 
   img {
@@ -124,7 +125,11 @@ function PokemonEvolution({
               onClick={() =>
                 pokemon.id !== currentPokemonId && onPokemonSelect(pokemon.id)
               }
-              className={pokemon.id === currentPokemonId ? "selected" : ""}
+              className={
+                String(pokemon.id) === String(currentPokemonId)
+                  ? "selected"
+                  : ""
+              }
             >
               <img
                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
