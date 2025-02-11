@@ -24,20 +24,27 @@ const EvolutionRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 0;
   flex-wrap: wrap;
 
   @media (max-width: ${theme.breakpoints.mobile}) {
-    gap: 1rem;
+    flex-direction: column;
+  }
+
+  & > div {
+    display: flex;
+    align-items: center;
   }
 `;
 
 const EvolutionArrow = styled.div`
   color: ${theme.colors.textLight};
   font-size: 1.5rem;
+  margin: 0 1rem;
 
   @media (max-width: ${theme.breakpoints.mobile}) {
     transform: rotate(90deg);
+    margin: 0.5rem 0;
   }
 `;
 
