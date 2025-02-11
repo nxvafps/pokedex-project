@@ -9,7 +9,7 @@ A modern, interactive Pokédex web application built with React that allows user
 - **Search Functionality**: Search for Pokémon by name or number
 - **Responsive Grid Layout**: View Pokémon in a clean, responsive grid
 - **Detailed Pokemon Information**:
-  - High-quality sprite images
+  - High-quality sprite images with playable Pokémon cries
   - Type information
   - Base stats with visual representations
   - Abilities with detailed descriptions
