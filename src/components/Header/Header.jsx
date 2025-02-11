@@ -1,10 +1,11 @@
 import pokedexSvg from "../../assets/pokedex.svg";
-import { StyledHeader, StyledImage } from "./styles";
+import { StyledHeader, StyledImage, TransFlag } from "./styles";
 
 function Header() {
   return (
     <StyledHeader>
       <StyledImage src={pokedexSvg} alt="pokedex image" />
+      <TransFlag />
     </StyledHeader>
   );
 }

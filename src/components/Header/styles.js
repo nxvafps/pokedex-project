@@ -41,3 +41,22 @@ export const StyledImage = styled.img`
     padding: 0.75em;
   }
 `;
+
+export const TransFlag = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(
+    to right,
+    #55cdfc 20%,
+    /* Light blue */ #f7a8b8 20%,
+    /* Light pink */ #f7a8b8 40%,
+    /* Light pink */ #ffffff 40%,
+    /* White */ #ffffff 60%,
+    /* White */ #f7a8b8 60%,
+    /* Light pink */ #f7a8b8 80%,
+    /* Light pink */ #55cdfc 80% /* Light blue */
+  );
+`;
