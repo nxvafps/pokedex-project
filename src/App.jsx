@@ -93,7 +93,7 @@ function App() {
         />
       ) : (
         <>
-          <PokemonForm onSearch={handleSearch} />
+          <PokemonForm onSearch={handleSearch} onPokemonSelect={handlePokemonSelect} />
           {loading ? (
             <p className="loading">Loading Pokémon...</p>
           ) : (
